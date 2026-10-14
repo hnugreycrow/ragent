@@ -17,7 +17,7 @@ spring:
     type: com.zaxxer.hikari.HikariDataSource
     username: postgres
     password: postgres
-    url: jdbc:postgresql://127.0.0.1:5432/ragent?client_encoding=UTF8
+    url: jdbc:postgresql://127.0.0.1:5432/ragent_v11?client_encoding=UTF8
     hikari:
       connection-timeout: 5000
       idle-timeout: 600000
@@ -188,7 +188,7 @@ ai:
         chat: /v1/chat/completions
         embedding: /v1/embeddings
     bailian:
-      url: https://dashscope.aliyuncs.com
+      url: https://llm-vu96ssm0fo582moc.cn-beijing.maas.aliyuncs.com
       api-key: ${BAILIAN_API_KEY:}
       endpoints:
         chat: /compatible-mode/v1/chat/completions
@@ -220,13 +220,13 @@ ai:
         model: qwen-plus-latest
       - id: qwen-flash
         provider: bailian
-        model: qwen-flash
+        model: qwen3.8-flash
       - id: qwen3-local
         provider: ollama
         model: qwen3:8b-fp16
       - id: qwen3-max
         provider: bailian
-        model: qwen3-max
+        model: qwen3.8-max
         supports-thinking: true
       - id: glm-4.7
         provider: siliconflow
