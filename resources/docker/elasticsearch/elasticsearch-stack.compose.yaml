@@ -1,0 +1,32 @@
+name: ragent-elasticsearch
+
+# 本地开发使用：关闭认证，端口仅绑定宿主机回环地址。
+# 后端在宿主机运行时使用 http://127.0.0.1:9200。
+services:
+  elasticsearch:
+    image: ragent/elasticsearch-ik:8.18.8
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        ES_VERSION: 8.18.8
+    container_name: ragent-es
+    environment:
+      discovery.type: single-node
+      xpack.security.enabled: "false"
+      ES_JAVA_OPTS: "-Xms1g -Xmx1g"
+    ports:
+      - "127.0.0.1:9200:9200"
+    volumes:
+      - es-data:/usr/share/elasticsearch/data
+    mem_limit: 2g
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS 'http://localhost:9200/_cluster/health?wait_for_status=yellow&timeout=5s' >/dev/null || exit 1"]
+      interval: 15s
+      timeout: 10s
+      retries: 10
+      start_period: 60s
+
+volumes:
+  es-data:
